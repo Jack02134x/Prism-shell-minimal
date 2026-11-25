@@ -25,7 +25,12 @@ Scope {
 
     IpcHandler {
         target: "sidebar"
-        function toggle(): void { Panels.toggleCalendar(); }
+        function toggle(): void { Panels.toggleNotifications(); }
+    }
+
+    IpcHandler {
+        target: "notifications"
+        function toggle(): void { Panels.toggleNotifications(); }
     }
 
     IpcHandler {

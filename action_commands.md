@@ -8,7 +8,7 @@ this in your Hyprland config.
 hl.bind("SUPER + N", hl.dsp.exec_cmd("qs ipc call calendar toggle"))
 ```
 
-Existing `dashboard toggle` and `sidebar toggle` keybinds open the settings popup and calendar.
+Existing `dashboard toggle` and `sidebar toggle` keybinds open the settings popup and notification sidebar.
 
 ## Panels
 
@@ -16,6 +16,7 @@ Existing `dashboard toggle` and `sidebar toggle` keybinds open the settings popu
 |---|---|
 | Launcher | `qs ipc call launcher toggle` |
 | Calendar | `qs ipc call calendar toggle` |
+| Notifications | `qs ipc call notifications toggle` |
 | Quick controls popup | `qs ipc call controls toggle` |
 | Settings popup | `qs ipc call preferences toggle` or `preferences tab network` / `preferences tab audio` |
 | Clipboard | `qs ipc call clipboard toggle` |

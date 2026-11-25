@@ -203,6 +203,15 @@ PanelWindow {
 
         BarChip {
             theme: bar.theme
+            glyph: Notifs.count ? "bell_badge" : "bell_outline"
+            text: Notifs.count ? String(Notifs.count) : ""
+            hint: "Open notifications"
+            selected: Panels.notifications && Panels.popupScreen === bar.output
+            onClicked: Panels.toggleNotifications(bar.output)
+        }
+
+        BarChip {
+            theme: bar.theme
             glyph: "calendar_today"
             text: Qt.formatDateTime(clock.date, bar.roomForLabels ? "ddd dd MMM  HH:mm" : "ddd HH:mm")
             hint: Qt.formatDate(clock.date, "dddd, d MMMM yyyy") + "\nClick for calendar · Right-click for clock"

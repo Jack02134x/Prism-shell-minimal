@@ -4,12 +4,32 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import Quickshell
 import Quickshell.Io
+import Quickshell.Services.Notifications
 
-// Prism can send its own reminders to the session's notification provider.
 Singleton {
     id: root
 
     property bool dnd: false
+    readonly property var entries: Array.from(server.trackedNotifications.values).reverse()
+    readonly property int count: entries.length
+
+    NotificationServer {
+        id: server
+        keepOnReload: true
+        persistenceSupported: true
+        bodySupported: true
+        actionsSupported: true
+        onNotification: notification => {
+            notification.tracked = true;
+            if (root.count > 100)
+                root.entries[root.count - 1]?.dismiss();
+        }
+    }
+
+    function clear(): void {
+        for (const notification of entries)
+            notification.dismiss();
+    }
 
     function local(summary, body, glyph, urgency, image, actions) {
         if (dnd && urgency !== 2)

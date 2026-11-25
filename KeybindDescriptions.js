@@ -12,7 +12,7 @@ const ipcActions = {
     "cheatsheet toggle": "View keyboard shortcuts",
     "edit toggle": "Open a config folder",
     "emoji toggle": "Find an emoji",
-    "sidebar toggle": "Open calendar",
+    "sidebar toggle": "Open notifications",
     "clock toggle": "Open clocks",
     "power toggle": "Open power actions",
     "lock lock": "Lock the screen",

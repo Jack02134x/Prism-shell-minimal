@@ -10,3 +10,5 @@ bind("SUPER + O", "overview", "toggle")
 bind("SUPER + V", "clipboard", "toggle")
 bind("SUPER + Space", "minimal", "openMode commands")
 bind("SUPER + L", "lock", "lock")
+
+bind("SUPER + N", "notifications", "toggle")

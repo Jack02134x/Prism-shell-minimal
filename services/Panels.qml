@@ -13,6 +13,7 @@ Singleton {
     property bool preferences: false
     property string preferencesTab: "settings"
     property bool calendar: false
+    property bool notifications: false
     property var popupScreen: null
     property bool controls: false
     property bool power: false
@@ -27,8 +28,8 @@ Singleton {
     signal clipboardRequested(string query)
     signal cheatsheetRequested()
 
-    readonly property var names: ["launcher", "preferences", "calendar", "controls", "power", "overview", "record", "edit", "switcher"]
-    readonly property bool anyOpen: launcher || preferences || calendar || controls || power || overview || record || edit || switcher
+    readonly property var names: ["launcher", "preferences", "calendar", "notifications", "controls", "power", "overview", "record", "edit", "switcher"]
+    readonly property bool anyOpen: launcher || preferences || calendar || notifications || controls || power || overview || record || edit || switcher
 
     readonly property var focusedScreen: {
         const name = Hyprland.focusedMonitor?.name ?? "";
@@ -43,6 +44,16 @@ Singleton {
         for (const k of names)
             if (k !== except)
                 root[k] = false;
+    }
+
+    function toggleNotifications(screen) {
+        const target = screen ?? focusedScreen;
+        if (notifications && popupScreen === target) {
+            notifications = false;
+        } else {
+            popupScreen = target;
+            show("notifications");
+        }
     }
 
     function toggle(name) {

@@ -69,6 +69,7 @@ ShellRoot {
     LazyPanel { want: Panels.launcher; Launcher {} }
     LazyPanel { want: Panels.preferences; PreferencesPopup {} }
     LazyPanel { want: Panels.calendar; CalendarPopup {} }
+    LazyPanel { want: Panels.notifications; NotificationsSidebar {} }
     LazyPanel { want: Panels.overview; Overview {} }
     LazyPanel { want: Panels.record; RecordMenu {} }
     LazyPanel { want: Panels.edit; QuickEdit {} }
@@ -106,6 +107,7 @@ ShellRoot {
         Theme.compact = appearance;
         Wallpapers.controller = desktopTools;
         Chrono.loaded;
+        Notifs.count;
         Breaks.enabled;
         Focus.active;
         Idle.active;

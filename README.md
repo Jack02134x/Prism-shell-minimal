@@ -48,7 +48,7 @@ Each IPC call starts with `qs ipc call`. The table lists common actions and thei
 | `Super+Escape` / `Super+Shift+Escape` | `preferences toggle` / `controls toggle` | Open the compact settings popup / quick controls |
 | `Super+/` | `cheatsheet toggle` | Search Hyprland and palette shortcuts full-screen |
 | `Super+.` | `emoji toggle` | Search and copy an emoji |
-| `Super+N` | `calendar toggle` | Open the calendar |
+| `Super+N` | `notifications toggle` | Open the notification sidebar |
 | `Super+K` | `clock toggle` | Open the floating clock, alarms, timers and stopwatch |
 | `Super+Shift+Q` | `edit toggle` | Open or manage Quick Edit folders |
 | `Super+M` | `power toggle` | Open power and session actions |
@@ -67,7 +67,9 @@ Type `=` for the calculator, `$` for shell commands, `#` for web search, `y` fol
 
 Click a workspace to switch to it. Click Wi-Fi or Bluetooth for Networks, the speaker or microphone for Audio, and the gear for Settings. Scroll over the speaker or brightness to adjust it. Right-click the speaker or microphone to mute it. Hover over a status item to see details.
 
-Click the date and time or press `Super+N` to open the calendar. Use `←` / `→` to change months and `Home` to return to today. Right-click the date and time for the floating clock.
+Click the date and time to open the calendar. Use `←` / `→` to change months and `Home` to return to today. Right-click the date and time for the floating clock.
+
+Click the bell or press `Super+N` to open the notification sidebar. Use `↑` / `↓` to select an entry, `Delete` to dismiss it, or **Clear all** to empty the list. The shell receives desktop notifications directly, so a separate notification daemon can compete for the same service.
 
 In the settings popup, `Ctrl+Tab` cycles Settings, Networks and Audio. `Alt+1` through `Alt+3` jump to a tab. Use `Tab` to focus controls and `Esc` to close.
 
@@ -86,7 +88,7 @@ The screenshot tool freezes the focused screen. Drag an area or click a window, 
 ## Panels and services
 
 - Networks includes Wi-Fi and Bluetooth, and Audio includes input and output devices and per-app volume.
-- The quick controls popup includes volume, brightness, media, caffeine, focus, warm screen and game mode. Shell reminders and recording results use the session's notification provider when one is available.
+- The quick controls popup includes volume, brightness, media, caffeine, focus, warm screen and game mode. Shell reminders and recording results appear in the notification sidebar.
 - Search for **Recording controls** or use `qs ipc call record menu` to record an area, window or output with `wf-recorder`. **Focus Timer** and **Clock** are searchable actions. Clock alarms and timers run while the window is closed.
 - Settings includes **Reduce motion** and **Classic bar**. The classic bar uses a three-pill layout and dynamic island.
 
