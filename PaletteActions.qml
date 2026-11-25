@@ -3,7 +3,6 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import Quickshell
 import Quickshell.Hyprland
-import Quickshell.Io
 import qs.common
 import qs.services
 
@@ -12,9 +11,15 @@ Scope {
 
     required property DesktopTools desktop
     property bool clipboardActive: false
-    property var clipboardEntries: []
+    readonly property var clipboardEntries: Clipboard.entries.map(entry => ({
+        title: entry.image ? "Image" : entry.text,
+        detail: entry.image ? entry.text.replace(/^\[\[ binary data /, "").replace(/ \]\]$/, "") : "",
+        imageId: entry.image ? entry.id : "",
+        run: () => Clipboard.copy(entry),
+        remove: () => Clipboard.remove(entry)
+    }))
     property var recentWindows: []
-    readonly property bool clipboardLoading: clipboardList.running
+    readonly property bool clipboardLoading: Clipboard.loading
 
     signal barToggleRequested()
 
@@ -135,12 +140,7 @@ Scope {
         });
     }
 
-    onClipboardActiveChanged: {
-        if (clipboardActive && !clipboardList.running)
-            clipboardList.running = true;
-        else if (!clipboardActive)
-            clipboardEntries = [];
-    }
+    onClipboardActiveChanged: if (clipboardActive) Clipboard.refresh()
 
     Component.onCompleted: rememberWindow()
 
@@ -149,28 +149,4 @@ Scope {
         function onActiveToplevelChanged() { root.rememberWindow(); }
     }
 
-    Process {
-        id: clipboardList
-        command: ["cliphist", "list"]
-        stdout: StdioCollector { id: clipboardOutput }
-
-        onExited: exitCode => {
-            if (!root.clipboardActive || exitCode !== 0)
-                return;
-
-            const items = [];
-            for (const line of clipboardOutput.text.split("\n")) {
-                const match = /^(\d+)\t(.+)$/.exec(line);
-                if (match) {
-                    const [, id, preview] = match;
-                    items.push({
-                        title: preview,
-                        detail: "",
-                        run: () => Quickshell.execDetached(["sh", "-c", 'cliphist decode "$1" | wl-copy', "prism-clipboard", id])
-                    });
-                }
-            }
-            root.clipboardEntries = items;
-        }
-    }
 }

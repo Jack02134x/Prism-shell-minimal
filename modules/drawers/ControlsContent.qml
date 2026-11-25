@@ -8,7 +8,7 @@ import qs.services
 import qs.widgets
 import qs.modules.dashboard
 
-// Left drawer: sliders, quick toggles, now playing, system at a glance.
+// Quick controls: sliders, quick toggles, now playing, system at a glance.
 Flickable {
     id: root
 

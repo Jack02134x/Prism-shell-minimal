@@ -331,22 +331,6 @@ Item {
                 accent: Theme.accent(2)
             }
             SettingRow {
-                icon: "dock_left"
-                title: "Left drawer"
-                sub: "Pull controls out from the left screen edge"
-                checked: Config.drawers.left
-                accentIndex: 2
-                onToggled: v => Config.drawers.left = v
-            }
-            SettingRow {
-                icon: "cursor_default_click"
-                title: "Open quick controls on hover"
-                sub: "Rest the pointer on the left edge"
-                checked: Config.drawers.hoverOpen
-                accentIndex: 4
-                onToggled: v => Config.drawers.hoverOpen = v
-            }
-            SettingRow {
                 icon: "eye_outline"
                 title: "Eye-break reminder"
                 sub: "Nudge to look away for 20 s after " + Config.breaks.everyMinutes + " min of use (idle time resets it)"

@@ -86,7 +86,7 @@ The screenshot tool freezes the focused screen. Drag an area or click a window, 
 ## Panels and services
 
 - Networks includes Wi-Fi and Bluetooth, and Audio includes input and output devices and per-app volume.
-- Quick controls include volume, brightness, media, caffeine, focus, warm screen and game mode. Shell reminders and recording results use the session's notification provider when one is available.
+- The quick controls popup includes volume, brightness, media, caffeine, focus, warm screen and game mode. Shell reminders and recording results use the session's notification provider when one is available.
 - Search for **Recording controls** or use `qs ipc call record menu` to record an area, window or output with `wf-recorder`. **Focus Timer** and **Clock** are searchable actions. Clock alarms and timers run while the window is closed.
 - Settings includes **Reduce motion** and **Classic bar**. The classic bar uses a three-pill layout and dynamic island.
 

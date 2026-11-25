@@ -38,7 +38,29 @@ ShellRoot {
         active: root.showBar && Config.bar.classic
         Variants { model: Quickshell.screens; FullscreenIsland {} }
     }
-    Variants { model: Quickshell.screens; Drawers {} }
+    LazyPanel {
+        want: Panels.controls
+        Overlay {
+            name: "controls"
+            open: Panels.controls
+            onDismiss: Panels.controls = false
+
+            Rectangle {
+                anchors.centerIn: parent
+                width: Math.min(420, parent.width - 32)
+                height: Math.min(610, parent.height - 32)
+                color: Theme.surface
+                border.color: Theme.outlineVariant
+                radius: 9
+                MouseArea { anchors.fill: parent }
+                ControlsContent {
+                    anchors.fill: parent
+                    anchors.margins: 12
+                    active: Panels.controls
+                }
+            }
+        }
+    }
     LazyLoader {
         active: Config.fx.corners || Config.fx.hotCorner
         Variants { model: Quickshell.screens; Corners {} }
@@ -98,6 +120,7 @@ ShellRoot {
         function onWallpaperRequested(query) {
             palette.showSearch("wallpapers", query);
         }
+        function onClipboardRequested(query) { palette.showSearch("clipboard", query); }
         function onCheatsheetRequested() { palette.showMode("shortcuts"); }
     }
 
@@ -191,12 +214,7 @@ ShellRoot {
 
     IpcHandler {
         target: "clipboard"
-        function toggle(): void {
-            if (Panels.launcher && Panels.launcherQuery === ">")
-                Panels.launcher = false;
-            else
-                Panels.openLauncher(">");
-        }
+        function toggle(): void { palette.toggleMode("clipboard"); }
     }
 
     IpcHandler {

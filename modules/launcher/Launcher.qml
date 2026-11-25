@@ -10,7 +10,7 @@ import qs.widgets
 
 // Spotlight-style launcher with prefix modes:
 //   (none) apps + commands + inline maths    /  commands     @  windows
-//   >  clipboard    :  emoji    $  shell    #  web    =  or "c "  calculator
+//   :  emoji    $  shell    #  web    =  or "c "  calculator
 //   y  YouTube      a  anime (ani-cli)      w  wallpapers    ?  help
 Overlay {
     id: win
@@ -23,8 +23,6 @@ Overlay {
         field.text = Panels.launcherQuery;
         field.focusInput();
         list.currentIndex = 0;
-        if (win.mode === "clipboard")
-            Clipboard.refresh();
     }
 
     property string query: field.text
@@ -32,7 +30,6 @@ Overlay {
     readonly property var modes: [
         { p: "/", mode: "actions", name: "Commands", glyph: "console_line", hint: "Run a shell command palette entry", accent: 2 },
         { p: "@", mode: "windows", name: "Windows", glyph: "dock_window", hint: "Jump to an open window", accent: 5 },
-        { p: ">", mode: "clipboard", name: "Clipboard", glyph: "clipboard_text_outline", hint: "Clipboard history (Shift+Del removes)", accent: 3 },
         { p: ":", mode: "emoji", name: "Emoji", glyph: "emoticon_happy_outline", hint: "Pick an emoji to copy", accent: 1 },
         { p: "$", mode: "command", name: "Shell", glyph: "console", hint: "Run a command · ↑↓ history · Shift+Enter in terminal", accent: 6 },
         { p: "#", mode: "web", name: "Web", glyph: "web", hint: "Search the web or open a site · visited sites below", accent: 4 },
@@ -50,12 +47,14 @@ Overlay {
     readonly property color accent: Theme.accent(current.accent)
 
     onModeChanged: {
-        if (mode === "clipboard")
-            Clipboard.refresh();
         if (mode === "wallpaper" && open)
             Qt.callLater(() => Panels.openWallpapers(win.term));
         list.currentIndex = 0;
         emojiGrid.currentIndex = 0;
+    }
+    onQueryChanged: {
+        if (open && query.startsWith(">"))
+            Qt.callLater(() => { if (win.open && win.query.startsWith(">")) Panels.openLauncher(win.query); });
     }
     onTermChanged: {
         list.currentIndex = 0;
@@ -103,8 +102,6 @@ Overlay {
             return Actions.list.map(a => ({ a, s: q === "" ? 1 : Math.max(Apps.score(a.name, q.toLowerCase()), Apps.score(a.kw + " " + a.desc, q.toLowerCase()) * 0.6) })).filter(x => x.s > 0).sort((x, y) => y.s - x.s).map((x, i) => ({ title: Apps.highlight(x.a.name, q.toLowerCase(), hl), sub: x.a.desc, glyph: x.a.icon, accent: i, run: x.a.run }));
         case "windows":
             return Hypr.realToplevels.filter(t => (t.title + " " + Hypr.classOf(t)).toLowerCase().includes(q.toLowerCase())).map(t => ({ title: Utils.escapeHtml(t.title), sub: Hypr.appName(Hypr.classOf(t)) + " · " + (t.workspace?.name ?? "?"), iconUrl: Hypr.iconFor(Hypr.classOf(t)), glyph: "application", accent: 5, run: () => Hypr.activate(t) }));
-        case "clipboard":
-            return Clipboard.entries.filter(e => q === "" || e.text.toLowerCase().includes(q.toLowerCase())).slice(0, 120).map(e => ({ title: e.image ? "Image" : Utils.escapeHtml(e.text.slice(0, 200)), sub: e.image ? e.text.replace(/^\[\[ binary data /, "").replace(/ \]\]$/, "") : "#" + e.id, image: e.image ? Clipboard.preview(e) : "", glyph: e.image ? "image" : "content_paste", accent: 3, clip: e, run: () => Clipboard.copy(e), del: () => Clipboard.remove(e) }));
         case "command":
             {
                 const runCmd = c => {
@@ -551,7 +548,7 @@ Overlay {
                     spacing: 8
                     Icon {
                         anchors.horizontalCenter: parent.horizontalCenter
-                        icon: win.mode === "clipboard" && Clipboard.loading ? "loading" : win.current.glyph
+                        icon: win.current.glyph
                         size: 34
                         color: Theme.alpha(win.accent, 0.7)
                     }

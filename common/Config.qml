@@ -96,10 +96,6 @@ Singleton {
             }
 
             property JsonObject drawers: JsonObject {
-                // pull-out quick controls on the left edge
-                property bool left: true
-                // open when the pointer rests on the edge (otherwise drag/click)
-                property bool hoverOpen: false
                 // Example tile: { "icon": "calendar_today", "label": "Calendar",
                 // "command": "qs ipc call calendar toggle" }
                 property var customTiles: []

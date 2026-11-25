@@ -16,7 +16,7 @@ Existing `dashboard toggle` and `sidebar toggle` keybinds open the settings popu
 |---|---|
 | Launcher | `qs ipc call launcher toggle` |
 | Calendar | `qs ipc call calendar toggle` |
-| Controls (left drawer) | `qs ipc call controls toggle` |
+| Quick controls popup | `qs ipc call controls toggle` |
 | Settings popup | `qs ipc call preferences toggle` or `preferences tab network` / `preferences tab audio` |
 | Clipboard | `qs ipc call clipboard toggle` |
 | Emoji | `qs ipc call emoji toggle` |

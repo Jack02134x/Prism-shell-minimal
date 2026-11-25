@@ -24,6 +24,7 @@ Singleton {
     // true while hyprpicker runs: every Prism surface hides instantly
     property bool capturing: false
     signal wallpaperRequested(string query)
+    signal clipboardRequested(string query)
     signal cheatsheetRequested()
 
     readonly property var names: ["launcher", "preferences", "calendar", "controls", "power", "overview", "record", "edit", "switcher"]
@@ -63,6 +64,11 @@ Singleton {
     }
 
     function openLauncher(query) {
+        if (query && query.startsWith(">")) {
+            closeAll();
+            clipboardRequested(query.slice(1).trim());
+            return;
+        }
         launcherQuery = query ?? "";
         if (launcher && query !== undefined) {
             // re-trigger the query even if already open

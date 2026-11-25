@@ -3,6 +3,7 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
+import Quickshell.Io
 import Quickshell.Hyprland
 import Quickshell.Wayland
 import qs.common
@@ -278,6 +279,8 @@ PanelWindow {
                                 picker.desktop.refreshWallpapers(true);
                             else if (picker.isShortcuts && (key === Qt.Key_PageDown || key === Qt.Key_PageUp))
                                 picker.moveSelection(key === Qt.Key_PageDown ? list.visibleRows : -list.visibleRows);
+                            else if (picker.mode === "clipboard" && key === Qt.Key_Delete && event.modifiers === Qt.ShiftModifier)
+                                picker.matches[list.currentIndex]?.remove();
                             else if (key === Qt.Key_Return || key === Qt.Key_Enter)
                                 picker.runSelected();
                             else if (control && key === Qt.Key_U)
@@ -328,11 +331,11 @@ PanelWindow {
                 Layout.topMargin: 6
                 Layout.bottomMargin: 6
                 Layout.preferredHeight: Math.min(Math.max(count, 1), visibleRows) * rowHeight
-                readonly property int rowHeight: picker.isShortcuts ? 49 : 34
+                readonly property int rowHeight: picker.isShortcuts ? 49 : picker.mode === "clipboard" && picker.matches.some(entry => entry.imageId) ? 74 : 34
                 readonly property int visibleRows: Math.max(1, Math.min(picker.isShortcuts ? 99 : 8, Math.floor((picker.height - 148) / rowHeight)))
 
                 clip: true
-                interactive: picker.isShortcuts
+                interactive: picker.isShortcuts || picker.mode === "clipboard"
                 model: picker.isWallpaper ? [] : picker.matches
                 currentIndex: Math.min(picker.selectedIndex, count - 1)
                 onCurrentIndexChanged: {
@@ -365,6 +368,30 @@ PanelWindow {
                         anchors.leftMargin: 10
                         anchors.rightMargin: 10
                         spacing: 12
+
+                        Image {
+                            id: preview
+                            readonly property string imageId: result.modelData.imageId ?? ""
+                            visible: imageId !== ""
+                            Layout.preferredWidth: 112
+                            Layout.preferredHeight: 64
+                            fillMode: Image.PreserveAspectFit
+                            cache: false
+
+                            onImageIdChanged: loadPreview()
+                            Component.onCompleted: loadPreview()
+                            function loadPreview(): void {
+                                source = "";
+                                decode.running = imageId !== "";
+                            }
+                            Process {
+                                id: decode
+                                command: ["sh", "-c", 'cliphist decode "$1" | magick - -delete 1--1 -thumbnail 160x96 png:- | base64 -w0', "clipboard-preview", preview.imageId]
+                                stdout: StdioCollector {
+                                    onStreamFinished: if (text.length) preview.source = "data:image/png;base64," + text
+                                }
+                            }
+                        }
 
                         Label {
                             Layout.fillWidth: true
@@ -419,6 +446,7 @@ PanelWindow {
                 elide: Text.ElideRight
                 text: picker.isWallpaper ? "Arrows Browse    Enter Apply    Ctrl+T Theme    Ctrl+G Transition    Ctrl+R Random"
                     : picker.isShortcuts ? "↑↓ or PgUp/PgDn Scroll    Type to filter"
+                    : picker.mode === "clipboard" ? "↑↓ Select    Enter Copy    Shift+Del Remove    Esc Close"
                     : "↑↓ Select    Enter Open    Tab Mode    Esc Close"
             }
         }
