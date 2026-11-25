@@ -1,0 +1,17 @@
+# Local settings and generated shell state
+/config.json
+/.cache/
+/.state/
+
+# Local workspace and personal files
+/.agents/
+/.aws/
+/.codex/
+/changes_to_make.txt
+/inspiration/
+/local/
+
+# Backup files and Python bytecode
+*.bak-*
+__pycache__/
+*.pyc
