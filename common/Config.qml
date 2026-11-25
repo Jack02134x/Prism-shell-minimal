@@ -130,8 +130,6 @@ Singleton {
                 // keybind files shown in the cheatsheet
                 property string binds: root.configHome + "/hypr/hyprland.lua"
                 property string extraBinds: ""
-                // optional hypr-screentime tracker folder (Screen time tab)
-                property string screentime: ""
                 property string screenshots: root.home + "/Pictures/Screenshots"
                 property string recordings: root.home + "/Videos/Recordings"
             }

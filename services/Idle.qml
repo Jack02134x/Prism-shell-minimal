@@ -8,8 +8,7 @@ import Quickshell.Services.Mpris
 import qs.common
 
 // Prism's idle manager (does what hypridle did): dim -> lock -> screens off ->
-// suspend after the times in Config.idle. Like the screen-time tracker, it only
-// calls the machine idle when it truly is: playing media counts as being in use,
+// suspend after the times in Config.idle. Playing media counts as being in use,
 // and so do caffeine and apps holding an idle inhibitor (fullscreen video).
 // Also locks before the system sleeps and answers `loginctl lock-session`.
 // Steps aside while hypridle is running, so the two never fight.

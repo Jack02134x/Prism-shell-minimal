@@ -254,8 +254,7 @@ Singleton {
 
     // ---- palette.json: the current colours for other apps ----------------------
     // Written to .state/palette.json whenever the wallpaper (and so the palette)
-    // changes, so programs that aren't Quickshell (the screen-time GUI, scripts)
-    // can match it. Stable format: bump "version" if it ever changes.
+    // changes, so other apps and scripts can match it. Stable format: bump "version" if it ever changes.
     function hex(c) {
         const h = v => Math.round(Math.max(0, Math.min(1, v)) * 255).toString(16).padStart(2, "0");
         return "#" + h(c.r) + h(c.g) + h(c.b);

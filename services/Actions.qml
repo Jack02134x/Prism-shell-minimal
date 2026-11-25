@@ -18,7 +18,6 @@ Singleton {
     readonly property var list: [
         { name: "Now Playing", desc: "Playback controls and track information", icon: "music", kw: "music player spotify", run: () => Panels.show("controls") },
         { name: "System Monitor", desc: "CPU, memory, GPU, network", icon: "chart_areaspline", kw: "cpu ram gpu stats htop", run: () => root.term("top") },
-        { name: "Screen Time", desc: "Today's usage from your tracker", icon: "timer_outline", kw: "usage hours apps", run: () => ScreenTime.openGui() },
         { name: "Wi-Fi & Bluetooth", desc: "Networks and devices", icon: "wifi", kw: "network bluetooth connect", run: () => Panels.openPreferences("network") },
         { name: "Audio Mixer", desc: "Outputs, inputs, per-app volume", icon: "tune_variant", kw: "volume sound mixer speaker", run: () => Panels.openPreferences("audio") },
         { name: "Shell Settings", desc: "Toggle Prism features", icon: "cog", kw: "config preferences prism", run: () => Panels.openPreferences("settings") },
@@ -52,7 +51,6 @@ Singleton {
         { name: "Projects", desc: "~/Projects", icon: "folder_star", kw: "code", run: () => Quickshell.execDetached([Config.apps.editor, Config.home + "/Projects"]) },
         { name: "Bluetooth TUI", desc: "bluetuith", icon: "bluetooth", kw: "bluetooth", run: () => root.term("bluetuith") },
         { name: "Network TUI", desc: "nmtui", icon: "lan", kw: "wifi network", run: () => root.term("nmtui") },
-        { name: "Screen Time App", desc: "Open the full tracker GUI", icon: "chart_bar", kw: "usage", run: () => ScreenTime.openGui() },
         { name: "Find My Phone", desc: "Ring a paired KDE Connect device", icon: "cellphone_sound", kw: "kdeconnect ring", run: () => Phone.ring() },
         { name: "Reload Shell", desc: "Restart Quickshell config", icon: "refresh", kw: "restart quickshell", run: () => Quickshell.reload(true) },
         { name: "Lock", desc: "Lock the session", icon: "lock", kw: "lock screen", run: () => Session.lock() },

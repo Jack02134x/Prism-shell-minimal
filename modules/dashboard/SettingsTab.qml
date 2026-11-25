@@ -444,7 +444,7 @@ Item {
                 visible: Config.idle.enabled
                 icon: "music"
                 title: "Playing media counts as use"
-                sub: "Music or a video playing anywhere keeps the screen on (like the screen-time tracker)"
+                sub: "Music or a video playing anywhere keeps the screen on"
                 checked: Config.idle.mediaKeepsAwake
                 accentIndex: 6
                 onToggled: v => Config.idle.mediaKeepsAwake = v

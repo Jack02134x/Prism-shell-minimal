@@ -175,12 +175,6 @@ Item {
                 tint: Theme.accent(5)
                 text: Chrono.nextAlarm ? Chrono.fmtWhen(Chrono.nextAlarm.at) + "  " + Chrono.nextAlarm.label : ""
             }
-            LockChip {
-                visible: ScreenTime.available && ScreenTime.today > 0
-                icon: "monitor"
-                tint: Theme.accent(6)
-                text: Utils.human(ScreenTime.today) + " today"
-            }
         }
     }
 
